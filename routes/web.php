@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -34,5 +35,6 @@ Route::middleware(['auth', 'role:admin'])
 
 });
    
+Route::resource('/posts', PostController::class);
 
 require __DIR__.'/auth.php';
