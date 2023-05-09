@@ -28,9 +28,13 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                     d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z" />
             </svg>
-
             <span class="mx-3">Dashboard</span>
         </a>
-
+        <x-sidebar-link :href="route('admin.roles.index')" :active="request()->routeIs('admin.roles.index')">
+            {{ __('Roles') }}
+        </x-sidebar-link>
+        <x-sidebar-link :href="route('admin.permissions.index')" :active="request()->routeIs('admin.permissions.index')">
+            {{ __('Permissions') }}
+        </x-sidebar-link>
     </nav>
 </div>
