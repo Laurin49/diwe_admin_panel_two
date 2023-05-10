@@ -1,9 +1,11 @@
-<x-guest-layout>
+<x-app-layout>
     <div class="max-w-6xl mx-auto mt-12">
-        <div class="flex justify-end p-2 m-2">
-            <a href="{{ route('posts.create') }}" class="px-4 py-2 bg-indigo-400 rounded hover:bg-indigo-600">
-                New Post</a>
-        </div>
+        @can('create', App\Models\Post::class)
+            <div class="flex justify-end p-2 m-2">
+                <a href="{{ route('posts.create') }}" class="px-4 py-2 bg-indigo-400 rounded hover:bg-indigo-600">
+                    New Post</a>
+            </div>
+        @endcan
         <div class="relative overflow-x-auto bg-gray-200 shadow-md sm:rounded-lg">
             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -33,17 +35,21 @@
 
                             <td class="px-6 py-4 text-right">
                                 <div class="flex space-x-2">
-                                    <a href="{{ route('posts.edit', $post->id) }}"
-                                        class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit
-                                    </a>
-                                    <form method="POST" action="{{ route('posts.destroy', $post->id) }}"
-                                        onsubmit="return confirm('Are you sure?');">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit"
-                                            class="font-medium text-red-600 dark:text-red-500 hover:underline">Delete
-                                        </button>
-                                    </form>
+                                    @can('update', $post)
+                                        <a href="{{ route('posts.edit', $post->id) }}"
+                                            class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit
+                                        </a>
+                                    @endcan
+                                    @can('delete', $post)
+                                        <form method="POST" action="{{ route('posts.destroy', $post->id) }}"
+                                            onsubmit="return confirm('Are you sure?');">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit"
+                                                class="font-medium text-red-600 dark:text-red-500 hover:underline">Delete
+                                            </button>
+                                        </form>
+                                    @endcan
                                 </div>
                             </td>
                         </tr>
@@ -54,4 +60,4 @@
         </div>
 
     </div>
-</x-guest-layout>
+</x-app-layout>

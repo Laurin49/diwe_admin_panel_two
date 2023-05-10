@@ -21,7 +21,8 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        // $this->authorize('create', Post::class);
+        return view('posts.create');
     }
 
     /**
@@ -30,9 +31,13 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Post $post)
     {
-        //
+        $this->authorize('create', Post::class);
+        $validated = $request->validate(['title' => 'required', 'body' => 'required']);
+        Post::create($validated);
+
+        return to_route('posts.index');
     }
 
     /**
